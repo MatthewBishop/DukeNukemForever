@@ -1,0 +1,8 @@
+base/*
+neo/.vs/*
+neo/out/*
+*.json
+*.ilk
+*.dll
+*.pdb
+*.exe
