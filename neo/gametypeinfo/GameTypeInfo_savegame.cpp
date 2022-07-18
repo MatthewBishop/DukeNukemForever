@@ -1220,11 +1220,11 @@ void DnLiztroop::Restore(idRestoreGame* savefile) {
 	__super::Restore(savefile);
 }
 
-void DnSchoolGirl::Save(idSaveGame* savefile) const {
+void DnCivilian::Save(idSaveGame* savefile) const {
 	__super::Save(savefile);
 }
 
-void DnSchoolGirl::Restore(idRestoreGame* savefile) {
+void DnCivilian::Restore(idRestoreGame* savefile) {
 	__super::Restore(savefile);
 }
 

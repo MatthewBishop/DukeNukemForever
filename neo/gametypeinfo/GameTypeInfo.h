@@ -4667,7 +4667,7 @@ static classVariableInfo_t DnLiztroop_typeInfo[] = {
 	{ NULL, 0 }
 };
 
-static classVariableInfo_t DnSchoolGirl_typeInfo[] = {
+static classVariableInfo_t DnCivilian_typeInfo[] = {
 	{ NULL, 0 }
 };
 
@@ -5057,7 +5057,7 @@ static classTypeInfo_t classTypeInfo[] = {
 	{ "DnAI", "idActor", sizeof(DnAI), DnAI_typeInfo },
 	{ "DnPigcop", "DnAI", sizeof(DnPigcop), DnPigcop_typeInfo },
 	{ "DnLiztroop", "DnAI", sizeof(DnLiztroop), DnLiztroop_typeInfo },
-	{ "DnSchoolGirl", "DnAI", sizeof(DnSchoolGirl), DnSchoolGirl_typeInfo },
+	{ "DnCivilian", "DnAI", sizeof(DnCivilian), DnCivilian_typeInfo },
 	{ "DukePlayer", "idPlayer", sizeof(DukePlayer), DukePlayer_typeInfo },
 	{ "dnDecoration", "idMover", sizeof(dnDecoration), dnDecoration_typeInfo },
 	{ "opcode_t", "", sizeof(opcode_t), opcode_t_typeInfo },

@@ -19,7 +19,7 @@ add_link_options("/LARGEADDRESSAWARE")
 # Project is not compatible with data execution prevention.
 add_link_options("/NXCOMPAT:NO")
 
-# Project is not compatible with safe exception handlers.
+# Project is not compatible with safe exception handlers. 
 add_link_options("/SAFESEH:NO")
 
 include_directories(external/bink;external/detour/include;external/glew;external/recast/include)
@@ -36,7 +36,9 @@ file(GLOB idLibFiles
 
 file(GLOB dnGameFiles
      "dukegame/*.cpp*"
-     "dukegame/DnAI/*.cpp*"
+     "dukegame/Civilians/*.cpp*"
+     "dukegame/DnAI/*.cpp*"     
+     "dukegame/Monsters/*.cpp*"
      "dukegame/components/*.cpp*"
      "dukegame/GameSys/*.cpp*"
      "dukegame/Player/*.cpp*"
