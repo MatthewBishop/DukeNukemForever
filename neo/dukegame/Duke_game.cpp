@@ -2,6 +2,32 @@
 //
 
 #include "../game/Game_local.h"
+/*
+===================
+dnGameLocal::Init
+===================
+*/
+void dnGameLocal::Init(void) {
+	idGameLocal::Init();
+
+	// Create the various jobs we need on the game side.
+	clientPhysicsJob = parallelJobManager->AllocJobList(JOBLIST_GAME_CLIENTPHYSICS, JOBLIST_PRIORITY_MEDIUM, 2, 0, NULL);
+	parallelJobManager->RegisterJob((jobRun_t)ClientEntityJob_t, "G_ClientPhysics");
+
+	//gameLocal.clientPhysicsJob->AddJobA((jobRun_t)dnGameLocal::ClientEntityJob_t, nullptr);
+	//gameLocal.clientPhysicsJob->Submit();
+
+	clientSpawnCount = INITIAL_SPAWN_COUNT;
+	clientSpawnedEntities.Clear();
+	memset(clientEntities, 0, sizeof(clientEntities));
+	memset(clientSpawnIds, -1, sizeof(clientSpawnIds));
+
+	InitGuis();
+	InitGameRender();
+
+	Printf("3drealms game initialized.\n");
+	Printf("--------------------------------------\n");
+}
 
 /*
 ===================
@@ -24,11 +50,10 @@ bool dnGameLocal::TracePoint(const idEntity* ent, trace_t& results, const idVec3
 
 /*
 =====================
-dnGameLocal::HitScan
+dnGameLocal::AimHitPredict
 =====================
 */
-idEntity* dnGameLocal::HitScan(const idVec3& origin, const idVec3& dir, const idVec3& origFxOrigin, idEntity* owner, bool noFX, float damageScale, idEntity* additionalIgnore, int	areas[2], bool spawnDebris, float range, int push)
-{
+DnAimHitType_t dnGameLocal::AimHitPredict(const idVec3& origin, const idVec3& dir, const idVec3& origFxOrigin, idEntity* owner, idEntity* additionalIgnore, float range) {
 	idVec3		start;
 	idVec3		end;
 	int			contents;
@@ -47,6 +72,42 @@ idEntity* dnGameLocal::HitScan(const idVec3& origin, const idVec3& dir, const id
 	TracePoint(owner, tr, start, end, contents, additionalIgnore);
 
 	if (tr.fraction >= 1.0f || (tr.c.material && tr.c.material->GetSurfaceFlags() & SURF_NOIMPACT)) {
+		return AIM_HIT_NOTHING;
+	}
+	ent = entities[tr.c.entityNum];
+
+	if (ent->fl.takedamage) {
+		return AIM_HIT_AI;
+	}
+
+	return AIM_HIT_NOTHING;
+}
+
+/*
+=====================
+dnGameLocal::HitScan
+=====================
+*/
+idEntity* dnGameLocal::HitScan(const idVec3& origin, const idVec3& dir, const idVec3& origFxOrigin, idEntity* owner, bool noFX, float damageScale, idEntity* additionalIgnore, int	areas[2], bool spawnDebris, float range, int push)
+{
+	idVec3		start;
+	idVec3		end;
+	int			contents;
+	trace_t		tr;
+
+	idEntity* ent = nullptr;
+
+	// Calculate the end point of the trace
+	start = origin;
+	end = start + (dir.ToMat3() * idVec3(idMath::ClampFloat(0, 2048, range), 0, 0));
+
+//	gameRenderWorld->DebugLine(colorWhite, start, end, 1000);
+
+	contents = MASK_SHOT_RENDERMODEL | CONTENTS_WATER | CONTENTS_PROJECTILE;
+
+	TracePoint(owner, tr, start, end, contents, additionalIgnore);
+
+	if (tr.fraction >= 1.0f || (tr.c.material && tr.c.material->GetSurfaceFlags() & SURF_NOIMPACT)) {
 		return nullptr;
 	}
 
@@ -59,54 +120,21 @@ idEntity* dnGameLocal::HitScan(const idVec3& origin, const idVec3& dir, const id
 		}
 	}
 #if 1
-	if (!ent->fl.takedamage && spawnDebris)
+	if (!ent->fl.takedamage)
 	{
-		// spawn debris entities
-		int fxdebris = 12; // spawnArgs.GetInt("debris_count");
-		if (fxdebris) {
-			const idDict* debris = gameLocal.FindEntityDefDict("debris_brass", false);
-			if (debris) {
-				int amount = gameLocal.random.RandomInt(fxdebris);
-				for (int i = 0; i < amount; i++) {
-					idEntity* ent;
-					idVec3 dir;
-					dir.x = gameLocal.random.CRandomFloat() * 4.0f;
-					dir.y = gameLocal.random.CRandomFloat() * 4.0f;
-					dir.z = gameLocal.random.RandomFloat() * 8.0f;
-					dir.Normalize();
-
-					gameLocal.SpawnEntityDef(*debris, &ent, false);
-					if (!ent || !ent->IsType(idDebris::Type)) {
-						gameLocal.Error("'projectile_debris' is not an idDebris");
-					}
-
-					idDebris* debris = static_cast<idDebris*>(ent);
-					debris->Create(owner, tr.c.point, dir.ToMat3());
-					debris->Launch(tr.c.material);
-				}
-			}
-			debris = gameLocal.FindEntityDefDict("projectile_shrapnel", false);
-			if (debris) {
-				int amount = gameLocal.random.RandomInt(fxdebris);
-				for (int i = 0; i < amount; i++) {
-					idEntity* ent;
-					idVec3 dir;
-					dir.x = gameLocal.random.CRandomFloat() * 8.0f;
-					dir.y = gameLocal.random.CRandomFloat() * 8.0f;
-					dir.z = gameLocal.random.RandomFloat() * 8.0f + 8.0f;
-					dir.Normalize();
-
-					gameLocal.SpawnEntityDef(*debris, &ent, false);
-					if (!ent || !ent->IsType(idDebris::Type)) {
-						gameLocal.Error("'projectile_shrapnel' is not an idDebris");
-					}
-
-					idDebris* debris = static_cast<idDebris*>(ent);
-					debris->Create(owner, tr.c.point, dir.ToMat3());
-					debris->Launch(tr.c.material);
-				}
-			}
-		}
+		idMat3 mat = tr.c.normal.ToAngles().ToMat3();
+		idEntityFx::StartFx("fx/debris", &tr.c.point, &mat, ent, true);
+	}
+	else
+	{
+		idAngles ang = tr.c.normal.ToAngles();
+		idAngles ang2 = tr.c.normal.ToAngles();
+		ang.pitch += 90.0f;
+		//ang2.pitch -= 90.0f;
+		idMat3 mat = ang.ToMat3();
+		idMat3 mat2 = ang2.ToMat3();
+		idEntityFx::StartFx("fx/bloodwound", &tr.c.point, &mat, ent, true);
+		idEntityFx::StartFx("fx/bloodwound", &tr.c.point, &mat2, ent, true);
 	}
 #endif
 	return ent;

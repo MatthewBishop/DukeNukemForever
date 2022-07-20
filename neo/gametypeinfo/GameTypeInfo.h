@@ -7,10 +7,10 @@
 
 	This file has been generated with the Type Info Generator v1.1 (c) 2004 id Software
 
-	589 constants
-	57 enums
-	306 classes/structs/unions
-	3 templates
+	593 constants
+	58 enums
+	314 classes/structs/unions
+	4 templates
 	7 max inheritance level for 'DnPigcop'
 
 ===================================================================================
@@ -261,6 +261,10 @@ static constantInfo_t constantInfo[] = {
 	{ "int", "SLOWMO_STATE_ON", "2" },
 	{ "int", "SLOWMO_STATE_RAMPDOWN", "3" },
 	{ ": const static int", "idGameLocal::INITIAL_SPAWN_COUNT", "1" },
+	{ "int", "AIM_HIT_NOTHING", "0" },
+	{ "int", "AIM_HIT_AI", "1" },
+	{ "int", "AIM_HIT_CIVILIAN", "2" },
+	{ ": const static int", "dnGameLocal::INITIAL_SPAWN_COUNT", "1" },
 	{ "int", "SND_CHANNEL_ANY", "0" },
 	{ "int", "SND_CHANNEL_VOICE", "0" },
 	{ "int", "SND_CHANNEL_VOICE2", "1" },
@@ -902,6 +906,13 @@ static enumValueInfo_t slowmoState_t_typeInfo[] = {
 	{ NULL, 0 }
 };
 
+static enumValueInfo_t DnAimHitType_t_typeInfo[] = {
+	{ "AIM_HIT_NOTHING", 0 },
+	{ "AIM_HIT_AI", 1 },
+	{ "AIM_HIT_CIVILIAN", 2 },
+	{ NULL, 0 }
+};
+
 static enumValueInfo_t gameSoundChannel_t_typeInfo[] = {
 	{ "SND_CHANNEL_ANY", 0 },
 	{ "SND_CHANNEL_VOICE", 0 },
@@ -993,7 +1004,7 @@ static enumValueInfo_t constraintType_t_typeInfo[] = {
 	{ NULL, 0 }
 };
 
-static enumValueInfo_t enum_26_typeInfo[] = {
+static enumValueInfo_t enum_27_typeInfo[] = {
 	{ "TH_ALL", -1 },
 	{ "TH_THINK", 1 },
 	{ "TH_PHYSICS", 2 },
@@ -1018,26 +1029,26 @@ static enumValueInfo_t signalNum_t_typeInfo[] = {
 	{ NULL, 0 }
 };
 
-static enumValueInfo_t idEntity_enum_28_typeInfo[] = {
+static enumValueInfo_t idEntity_enum_29_typeInfo[] = {
 	{ "EVENT_STARTSOUNDSHADER", 0 },
 	{ "EVENT_STOPSOUNDSHADER", 1 },
 	{ "EVENT_MAXEVENTS", 2 },
 	{ NULL, 0 }
 };
 
-static enumValueInfo_t idAnimatedEntity_enum_29_typeInfo[] = {
+static enumValueInfo_t idAnimatedEntity_enum_30_typeInfo[] = {
 	{ "EVENT_ADD_DAMAGE_EFFECT", 2 },
 	{ "EVENT_MAXEVENTS", 3 },
 	{ NULL, 0 }
 };
 
-static enumValueInfo_t idPlayerStart_enum_30_typeInfo[] = {
+static enumValueInfo_t idPlayerStart_enum_31_typeInfo[] = {
 	{ "EVENT_TELEPORTPLAYER", 2 },
 	{ "EVENT_MAXEVENTS", 3 },
 	{ NULL, 0 }
 };
 
-static enumValueInfo_t idProjectile_enum_31_typeInfo[] = {
+static enumValueInfo_t idProjectile_enum_32_typeInfo[] = {
 	{ "EVENT_DAMAGE_EFFECT", 2 },
 	{ "EVENT_MAXEVENTS", 3 },
 	{ NULL, 0 }
@@ -1052,7 +1063,7 @@ static enumValueInfo_t idProjectile_projectileState_t_typeInfo[] = {
 	{ NULL, 0 }
 };
 
-static enumValueInfo_t idWeapon_enum_33_typeInfo[] = {
+static enumValueInfo_t idWeapon_enum_34_typeInfo[] = {
 	{ "EVENT_RELOAD", 2 },
 	{ "EVENT_ENDRELOAD", 3 },
 	{ "EVENT_CHANGESKIN", 4 },
@@ -1060,13 +1071,13 @@ static enumValueInfo_t idWeapon_enum_33_typeInfo[] = {
 	{ NULL, 0 }
 };
 
-static enumValueInfo_t idLight_enum_34_typeInfo[] = {
+static enumValueInfo_t idLight_enum_35_typeInfo[] = {
 	{ "EVENT_BECOMEBROKEN", 2 },
 	{ "EVENT_MAXEVENTS", 3 },
 	{ NULL, 0 }
 };
 
-static enumValueInfo_t idItem_enum_35_typeInfo[] = {
+static enumValueInfo_t idItem_enum_36_typeInfo[] = {
 	{ "EVENT_PICKUP", 2 },
 	{ "EVENT_RESPAWN", 3 },
 	{ "EVENT_RESPAWNFX", 4 },
@@ -1078,7 +1089,7 @@ static enumValueInfo_t idItem_enum_35_typeInfo[] = {
 	{ NULL, 0 }
 };
 
-static enumValueInfo_t enum_36_typeInfo[] = {
+static enumValueInfo_t enum_37_typeInfo[] = {
 	{ "BERSERK", 0 },
 	{ "INVISIBILITY", 1 },
 	{ "MEGAHEALTH", 2 },
@@ -1091,7 +1102,7 @@ static enumValueInfo_t enum_36_typeInfo[] = {
 	{ NULL, 0 }
 };
 
-static enumValueInfo_t enum_37_typeInfo[] = {
+static enumValueInfo_t enum_38_typeInfo[] = {
 	{ "SPEED", 0 },
 	{ "PROJECTILE_DAMAGE", 1 },
 	{ "MELEE_DAMAGE", 2 },
@@ -1099,7 +1110,7 @@ static enumValueInfo_t enum_37_typeInfo[] = {
 	{ NULL, 0 }
 };
 
-static enumValueInfo_t enum_38_typeInfo[] = {
+static enumValueInfo_t enum_39_typeInfo[] = {
 	{ "INFLUENCE_NONE", 0 },
 	{ "INFLUENCE_LEVEL1", 1 },
 	{ "INFLUENCE_LEVEL2", 2 },
@@ -1107,7 +1118,7 @@ static enumValueInfo_t enum_38_typeInfo[] = {
 	{ NULL, 0 }
 };
 
-static enumValueInfo_t idPlayer_enum_39_typeInfo[] = {
+static enumValueInfo_t idPlayer_enum_40_typeInfo[] = {
 	{ "EVENT_IMPULSE", 2 },
 	{ "EVENT_EXIT_TELEPORTER", 3 },
 	{ "EVENT_ABORT_TELEPORTER", 4 },
@@ -1165,7 +1176,7 @@ static enumValueInfo_t moverState_t_typeInfo[] = {
 	{ NULL, 0 }
 };
 
-static enumValueInfo_t idExplodingBarrel_enum_45_typeInfo[] = {
+static enumValueInfo_t idExplodingBarrel_enum_46_typeInfo[] = {
 	{ "EVENT_EXPLODE", 2 },
 	{ "EVENT_MAXEVENTS", 3 },
 	{ NULL, 0 }
@@ -1179,7 +1190,7 @@ static enumValueInfo_t idExplodingBarrel_explode_state_t_typeInfo[] = {
 	{ NULL, 0 }
 };
 
-static enumValueInfo_t idSecurityCamera_enum_47_typeInfo[] = {
+static enumValueInfo_t idSecurityCamera_enum_48_typeInfo[] = {
 	{ "SCANNING", 0 },
 	{ "LOSINGINTEREST", 1 },
 	{ "ALERT", 2 },
@@ -1187,7 +1198,7 @@ static enumValueInfo_t idSecurityCamera_enum_47_typeInfo[] = {
 	{ NULL, 0 }
 };
 
-static enumValueInfo_t idBrittleFracture_enum_48_typeInfo[] = {
+static enumValueInfo_t idBrittleFracture_enum_49_typeInfo[] = {
 	{ "EVENT_PROJECT_DECAL", 2 },
 	{ "EVENT_SHATTER", 3 },
 	{ "EVENT_MAXEVENTS", 4 },
@@ -1263,7 +1274,7 @@ static enumValueInfo_t dnWeapons_typeInfo[] = {
 	{ NULL, 0 }
 };
 
-static enumValueInfo_t enum_56_typeInfo[] = {
+static enumValueInfo_t enum_57_typeInfo[] = {
 	{ "OP_RETURN", 0 },
 	{ "OP_UINC_F", 1 },
 	{ "OP_UINCP_F", 2 },
@@ -1410,6 +1421,7 @@ static enumTypeInfo_t enumTypeInfo[] = {
 	{ "gameState_t", gameState_t_typeInfo },
 	{ "idEventQueue::outOfOrderBehaviour_t", idEventQueue_outOfOrderBehaviour_t_typeInfo },
 	{ "slowmoState_t", slowmoState_t_typeInfo },
+	{ "DnAimHitType_t", DnAimHitType_t_typeInfo },
 	{ "gameSoundChannel_t", gameSoundChannel_t_typeInfo },
 	{ "stateResult_t", stateResult_t_typeInfo },
 	{ "forceFieldType", forceFieldType_typeInfo },
@@ -1418,29 +1430,29 @@ static enumTypeInfo_t enumTypeInfo[] = {
 	{ "pmtype_t", pmtype_t_typeInfo },
 	{ "waterLevel_t", waterLevel_t_typeInfo },
 	{ "constraintType_t", constraintType_t_typeInfo },
-	{ "enum_26", enum_26_typeInfo },
+	{ "enum_27", enum_27_typeInfo },
 	{ "signalNum_t", signalNum_t_typeInfo },
-	{ "idEntity::enum_28", idEntity_enum_28_typeInfo },
-	{ "idAnimatedEntity::enum_29", idAnimatedEntity_enum_29_typeInfo },
-	{ "idPlayerStart::enum_30", idPlayerStart_enum_30_typeInfo },
-	{ "idProjectile::enum_31", idProjectile_enum_31_typeInfo },
+	{ "idEntity::enum_29", idEntity_enum_29_typeInfo },
+	{ "idAnimatedEntity::enum_30", idAnimatedEntity_enum_30_typeInfo },
+	{ "idPlayerStart::enum_31", idPlayerStart_enum_31_typeInfo },
+	{ "idProjectile::enum_32", idProjectile_enum_32_typeInfo },
 	{ "idProjectile::projectileState_t", idProjectile_projectileState_t_typeInfo },
-	{ "idWeapon::enum_33", idWeapon_enum_33_typeInfo },
-	{ "idLight::enum_34", idLight_enum_34_typeInfo },
-	{ "idItem::enum_35", idItem_enum_35_typeInfo },
-	{ "enum_36", enum_36_typeInfo },
+	{ "idWeapon::enum_34", idWeapon_enum_34_typeInfo },
+	{ "idLight::enum_35", idLight_enum_35_typeInfo },
+	{ "idItem::enum_36", idItem_enum_36_typeInfo },
 	{ "enum_37", enum_37_typeInfo },
 	{ "enum_38", enum_38_typeInfo },
-	{ "idPlayer::enum_39", idPlayer_enum_39_typeInfo },
+	{ "enum_39", enum_39_typeInfo },
+	{ "idPlayer::enum_40", idPlayer_enum_40_typeInfo },
 	{ "idMover::moveStage_t", idMover_moveStage_t_typeInfo },
 	{ "idMover::moverCommand_t", idMover_moverCommand_t_typeInfo },
 	{ "idMover::moverDir_t", idMover_moverDir_t_typeInfo },
 	{ "idElevator::elevatorState_t", idElevator_elevatorState_t_typeInfo },
 	{ "moverState_t", moverState_t_typeInfo },
-	{ "idExplodingBarrel::enum_45", idExplodingBarrel_enum_45_typeInfo },
+	{ "idExplodingBarrel::enum_46", idExplodingBarrel_enum_46_typeInfo },
 	{ "idExplodingBarrel::explode_state_t", idExplodingBarrel_explode_state_t_typeInfo },
-	{ "idSecurityCamera::enum_47", idSecurityCamera_enum_47_typeInfo },
-	{ "idBrittleFracture::enum_48", idBrittleFracture_enum_48_typeInfo },
+	{ "idSecurityCamera::enum_48", idSecurityCamera_enum_48_typeInfo },
+	{ "idBrittleFracture::enum_49", idBrittleFracture_enum_49_typeInfo },
 	{ "moveType_t", moveType_t_typeInfo },
 	{ "moveCommand_t", moveCommand_t_typeInfo },
 	{ "talkState_t", talkState_t_typeInfo },
@@ -1448,7 +1460,7 @@ static enumTypeInfo_t enumTypeInfo[] = {
 	{ "PIGCOP_IDLE_STATE", PIGCOP_IDLE_STATE_typeInfo },
 	{ "LIZTROOP_IDLE_STATE", LIZTROOP_IDLE_STATE_typeInfo },
 	{ "dnWeapons", dnWeapons_typeInfo },
-	{ "enum_56", enum_56_typeInfo },
+	{ "enum_57", enum_57_typeInfo },
 	{ NULL, NULL }
 };
 
@@ -1828,6 +1840,7 @@ static classVariableInfo_t idClipModel_typeInfo[] = {
 	{ "cmHandle_t", "collisionModelHandle", (intptr_t)(&((idClipModel *)0)->collisionModelHandle), sizeof( ((idClipModel *)0)->collisionModelHandle ) },
 	{ "int", "traceModelIndex", (intptr_t)(&((idClipModel *)0)->traceModelIndex), sizeof( ((idClipModel *)0)->traceModelIndex ) },
 	{ "int", "renderModelHandle", (intptr_t)(&((idClipModel *)0)->renderModelHandle), sizeof( ((idClipModel *)0)->renderModelHandle ) },
+	{ "bool", "traceRecievesCollision", (intptr_t)(&((idClipModel *)0)->traceRecievesCollision), sizeof( ((idClipModel *)0)->traceRecievesCollision ) },
 	{ "clipLink_s *", "clipLinks", (intptr_t)(&((idClipModel *)0)->clipLinks), sizeof( ((idClipModel *)0)->clipLinks ) },
 	{ "int", "touchCount", (intptr_t)(&((idClipModel *)0)->touchCount), sizeof( ((idClipModel *)0)->touchCount ) },
 	{ NULL, 0 }
@@ -2095,7 +2108,6 @@ static classVariableInfo_t idGameLocal_typeInfo[] = {
 	{ "const idMaterial *", "globalMaterial", (intptr_t)(&((idGameLocal *)0)->globalMaterial), sizeof( ((idGameLocal *)0)->globalMaterial ) },
 	{ "idEntityPtr < idActor >", "lastAIAlertEntity", (intptr_t)(&((idGameLocal *)0)->lastAIAlertEntity), sizeof( ((idGameLocal *)0)->lastAIAlertEntity ) },
 	{ "int", "lastAIAlertTime", (intptr_t)(&((idGameLocal *)0)->lastAIAlertTime), sizeof( ((idGameLocal *)0)->lastAIAlertTime ) },
-	{ "idDict", "spawnArgs", (intptr_t)(&((idGameLocal *)0)->spawnArgs), sizeof( ((idGameLocal *)0)->spawnArgs ) },
 	{ "pvsHandle_t", "playerPVS", (intptr_t)(&((idGameLocal *)0)->playerPVS), sizeof( ((idGameLocal *)0)->playerPVS ) },
 	{ "pvsHandle_t", "playerConnectedAreas", (intptr_t)(&((idGameLocal *)0)->playerConnectedAreas), sizeof( ((idGameLocal *)0)->playerConnectedAreas ) },
 	{ "idVec3", "gravity", (intptr_t)(&((idGameLocal *)0)->gravity), sizeof( ((idGameLocal *)0)->gravity ) },
@@ -2120,6 +2132,7 @@ static classVariableInfo_t idGameLocal_typeInfo[] = {
 	{ "idStrList", "shakeSounds", (intptr_t)(&((idGameLocal *)0)->shakeSounds), sizeof( ((idGameLocal *)0)->shakeSounds ) },
 	{ "byte[16384]", "lagometer", (intptr_t)(&((idGameLocal *)0)->lagometer), sizeof( ((idGameLocal *)0)->lagometer ) },
 	{ "idList < rvmGameDelayRemoveEntry_t >", "delayRemoveEntities", (intptr_t)(&((idGameLocal *)0)->delayRemoveEntities), sizeof( ((idGameLocal *)0)->delayRemoveEntities ) },
+	{ ": idDict", "spawnArgs", (intptr_t)(&((idGameLocal *)0)->spawnArgs), sizeof( ((idGameLocal *)0)->spawnArgs ) },
 	{ NULL, 0 }
 };
 
@@ -2158,6 +2171,16 @@ static classVariableInfo_t DnRenderPlatform_typeInfo[] = {
 static classVariableInfo_t dnGameLocal_typeInfo[] = {
 	{ ": DnRenderPlatform", "renderPlatform", (intptr_t)(&((dnGameLocal *)0)->renderPlatform), sizeof( ((dnGameLocal *)0)->renderPlatform ) },
 	{ "idUserInterface *", "guiMainMenu", (intptr_t)(&((dnGameLocal *)0)->guiMainMenu), sizeof( ((dnGameLocal *)0)->guiMainMenu ) },
+	{ "rvClientEntity *[4096]", "clientEntities", (intptr_t)(&((dnGameLocal *)0)->clientEntities), sizeof( ((dnGameLocal *)0)->clientEntities ) },
+	{ "int[4096]", "clientSpawnIds", (intptr_t)(&((dnGameLocal *)0)->clientSpawnIds), sizeof( ((dnGameLocal *)0)->clientSpawnIds ) },
+	{ "idLinkList < rvClientEntity >", "clientSpawnedEntities", (intptr_t)(&((dnGameLocal *)0)->clientSpawnedEntities), sizeof( ((dnGameLocal *)0)->clientSpawnedEntities ) },
+	{ "int", "num_clientEntities", (intptr_t)(&((dnGameLocal *)0)->num_clientEntities), sizeof( ((dnGameLocal *)0)->num_clientEntities ) },
+	{ "int", "firstFreeClientIndex", (intptr_t)(&((dnGameLocal *)0)->firstFreeClientIndex), sizeof( ((dnGameLocal *)0)->firstFreeClientIndex ) },
+	{ "int", "clientSpawnCount", (intptr_t)(&((dnGameLocal *)0)->clientSpawnCount), sizeof( ((dnGameLocal *)0)->clientSpawnCount ) },
+	{ "int", "entityRegisterTime", (intptr_t)(&((dnGameLocal *)0)->entityRegisterTime), sizeof( ((dnGameLocal *)0)->entityRegisterTime ) },
+	{ "idSysMutex", "clientGamePhysicsMutex", (intptr_t)(&((dnGameLocal *)0)->clientGamePhysicsMutex), sizeof( ((dnGameLocal *)0)->clientGamePhysicsMutex ) },
+	{ "idParallelJobList *", "clientPhysicsJob", (intptr_t)(&((dnGameLocal *)0)->clientPhysicsJob), sizeof( ((dnGameLocal *)0)->clientPhysicsJob ) },
+	{ "idList < rvClientEntity * >", "clientEntityThreadWork", (intptr_t)(&((dnGameLocal *)0)->clientEntityThreadWork), sizeof( ((dnGameLocal *)0)->clientEntityThreadWork ) },
 	{ NULL, 0 }
 };
 
@@ -2861,10 +2884,11 @@ static classVariableInfo_t idEntity_typeInfo[] = {
 	{ ": renderEntity_t", "renderEntity", (intptr_t)(&((idEntity *)0)->renderEntity), sizeof( ((idEntity *)0)->renderEntity ) },
 	{ "int", "modelDefHandle", (intptr_t)(&((idEntity *)0)->modelDefHandle), sizeof( ((idEntity *)0)->modelDefHandle ) },
 	{ "refSound_t", "refSound", (intptr_t)(&((idEntity *)0)->refSound), sizeof( ((idEntity *)0)->refSound ) },
+	{ ": idLinkList < rvClientEntity >", "clientEntities", (intptr_t)(&((idEntity *)0)->clientEntities), sizeof( ((idEntity *)0)->clientEntities ) },
+	{ ": idEntity *", "bindMaster", (intptr_t)(&((idEntity *)0)->bindMaster), sizeof( ((idEntity *)0)->bindMaster ) },
+	{ "jointHandle_t", "bindJoint", (intptr_t)(&((idEntity *)0)->bindJoint), sizeof( ((idEntity *)0)->bindJoint ) },
 	{ ": idPhysics_Static", "defaultPhysicsObj", (intptr_t)(&((idEntity *)0)->defaultPhysicsObj), sizeof( ((idEntity *)0)->defaultPhysicsObj ) },
 	{ "idPhysics *", "physics", (intptr_t)(&((idEntity *)0)->physics), sizeof( ((idEntity *)0)->physics ) },
-	{ "idEntity *", "bindMaster", (intptr_t)(&((idEntity *)0)->bindMaster), sizeof( ((idEntity *)0)->bindMaster ) },
-	{ "jointHandle_t", "bindJoint", (intptr_t)(&((idEntity *)0)->bindJoint), sizeof( ((idEntity *)0)->bindJoint ) },
 	{ "int", "bindBody", (intptr_t)(&((idEntity *)0)->bindBody), sizeof( ((idEntity *)0)->bindBody ) },
 	{ "idEntity *", "teamMaster", (intptr_t)(&((idEntity *)0)->teamMaster), sizeof( ((idEntity *)0)->teamMaster ) },
 	{ "idEntity *", "teamChain", (intptr_t)(&((idEntity *)0)->teamChain), sizeof( ((idEntity *)0)->teamChain ) },
@@ -4679,10 +4703,88 @@ static classVariableInfo_t DukePlayer_typeInfo[] = {
 	{ "float", "bob", (intptr_t)(&((DukePlayer *)0)->bob), sizeof( ((DukePlayer *)0)->bob ) },
 	{ "float", "lastAppliedBobCycle", (intptr_t)(&((DukePlayer *)0)->lastAppliedBobCycle), sizeof( ((DukePlayer *)0)->lastAppliedBobCycle ) },
 	{ "idStr", "currentAnimation", (intptr_t)(&((DukePlayer *)0)->currentAnimation), sizeof( ((DukePlayer *)0)->currentAnimation ) },
+	{ "rvmDeclRenderParam *", "guiCrosshairColorParam", (intptr_t)(&((DukePlayer *)0)->guiCrosshairColorParam), sizeof( ((DukePlayer *)0)->guiCrosshairColorParam ) },
 	{ NULL, 0 }
 };
 
 static classVariableInfo_t dnDecoration_typeInfo[] = {
+	{ NULL, 0 }
+};
+
+static classVariableInfo_t rvClientEntity_typeInfo[] = {
+	{ ": int", "entityNumber", (intptr_t)(&((rvClientEntity *)0)->entityNumber), sizeof( ((rvClientEntity *)0)->entityNumber ) },
+	{ "idLinkList < rvClientEntity >", "spawnNode", (intptr_t)(&((rvClientEntity *)0)->spawnNode), sizeof( ((rvClientEntity *)0)->spawnNode ) },
+	{ "idLinkList < rvClientEntity >", "bindNode", (intptr_t)(&((rvClientEntity *)0)->bindNode), sizeof( ((rvClientEntity *)0)->bindNode ) },
+	{ "idDict", "spawnArgs", (intptr_t)(&((rvClientEntity *)0)->spawnArgs), sizeof( ((rvClientEntity *)0)->spawnArgs ) },
+	{ ": idPhysics_Static", "defaultPhysicsObj", (intptr_t)(&((rvClientEntity *)0)->defaultPhysicsObj), sizeof( ((rvClientEntity *)0)->defaultPhysicsObj ) },
+	{ "idPhysics *", "physics", (intptr_t)(&((rvClientEntity *)0)->physics), sizeof( ((rvClientEntity *)0)->physics ) },
+	{ "idVec3", "worldOrigin", (intptr_t)(&((rvClientEntity *)0)->worldOrigin), sizeof( ((rvClientEntity *)0)->worldOrigin ) },
+	{ "idVec3", "worldVelocity", (intptr_t)(&((rvClientEntity *)0)->worldVelocity), sizeof( ((rvClientEntity *)0)->worldVelocity ) },
+	{ "idMat3", "worldAxis", (intptr_t)(&((rvClientEntity *)0)->worldAxis), sizeof( ((rvClientEntity *)0)->worldAxis ) },
+	{ "idVec3", "worldOriginThread", (intptr_t)(&((rvClientEntity *)0)->worldOriginThread), sizeof( ((rvClientEntity *)0)->worldOriginThread ) },
+	{ "idVec3", "worldVelocityThread", (intptr_t)(&((rvClientEntity *)0)->worldVelocityThread), sizeof( ((rvClientEntity *)0)->worldVelocityThread ) },
+	{ "idMat3", "worldAxisThread", (intptr_t)(&((rvClientEntity *)0)->worldAxisThread), sizeof( ((rvClientEntity *)0)->worldAxisThread ) },
+	{ "bool", "hasThreadedResults", (intptr_t)(&((rvClientEntity *)0)->hasThreadedResults), sizeof( ((rvClientEntity *)0)->hasThreadedResults ) },
+	{ "idEntity *", "bindMaster", (intptr_t)(&((rvClientEntity *)0)->bindMaster), sizeof( ((rvClientEntity *)0)->bindMaster ) },
+	{ "idVec3", "bindOrigin", (intptr_t)(&((rvClientEntity *)0)->bindOrigin), sizeof( ((rvClientEntity *)0)->bindOrigin ) },
+	{ "idMat3", "bindAxis", (intptr_t)(&((rvClientEntity *)0)->bindAxis), sizeof( ((rvClientEntity *)0)->bindAxis ) },
+	{ "jointHandle_t", "bindJoint", (intptr_t)(&((rvClientEntity *)0)->bindJoint), sizeof( ((rvClientEntity *)0)->bindJoint ) },
+	{ "bool", "bindOrientated", (intptr_t)(&((rvClientEntity *)0)->bindOrientated), sizeof( ((rvClientEntity *)0)->bindOrientated ) },
+	{ "refSound_t", "refSound", (intptr_t)(&((rvClientEntity *)0)->refSound), sizeof( ((rvClientEntity *)0)->refSound ) },
+	{ NULL, 0 }
+};
+
+static classVariableInfo_t rvClientPhysics_typeInfo[] = {
+	{ "int", "currentEntityNumber", (intptr_t)(&((rvClientPhysics *)0)->currentEntityNumber), sizeof( ((rvClientPhysics *)0)->currentEntityNumber ) },
+	{ ": idEntity *", "pushedBindMaster", (intptr_t)(&((rvClientPhysics *)0)->pushedBindMaster), sizeof( ((rvClientPhysics *)0)->pushedBindMaster ) },
+	{ "jointHandle_t", "pushedBindJoint", (intptr_t)(&((rvClientPhysics *)0)->pushedBindJoint), sizeof( ((rvClientPhysics *)0)->pushedBindJoint ) },
+	{ "idVec3", "pushedOrigin", (intptr_t)(&((rvClientPhysics *)0)->pushedOrigin), sizeof( ((rvClientPhysics *)0)->pushedOrigin ) },
+	{ "idMat3", "pushedAxis", (intptr_t)(&((rvClientPhysics *)0)->pushedAxis), sizeof( ((rvClientPhysics *)0)->pushedAxis ) },
+	{ "bool", "pushedOrientated", (intptr_t)(&((rvClientPhysics *)0)->pushedOrientated), sizeof( ((rvClientPhysics *)0)->pushedOrientated ) },
+	{ NULL, 0 }
+};
+
+static classVariableInfo_t rvClientModel_typeInfo[] = {
+	{ "renderEntity_t", "renderEntity", (intptr_t)(&((rvClientModel *)0)->renderEntity), sizeof( ((rvClientModel *)0)->renderEntity ) },
+	{ "int", "entityDefHandle", (intptr_t)(&((rvClientModel *)0)->entityDefHandle), sizeof( ((rvClientModel *)0)->entityDefHandle ) },
+	{ "idStr", "classname", (intptr_t)(&((rvClientModel *)0)->classname), sizeof( ((rvClientModel *)0)->classname ) },
+	{ NULL, 0 }
+};
+
+static classVariableInfo_t rvAnimatedClientEntity_typeInfo[] = {
+	{ ": idAnimator", "animator", (intptr_t)(&((rvAnimatedClientEntity *)0)->animator), sizeof( ((rvAnimatedClientEntity *)0)->animator ) },
+	{ NULL, 0 }
+};
+
+static classVariableInfo_t rvClientMoveable_typeInfo[] = {
+	{ ": renderEntity_t", "renderEntity", (intptr_t)(&((rvClientMoveable *)0)->renderEntity), sizeof( ((rvClientMoveable *)0)->renderEntity ) },
+	{ "int", "entityDefHandle", (intptr_t)(&((rvClientMoveable *)0)->entityDefHandle), sizeof( ((rvClientMoveable *)0)->entityDefHandle ) },
+	{ "float", "trailAttenuateSpeed", (intptr_t)(&((rvClientMoveable *)0)->trailAttenuateSpeed), sizeof( ((rvClientMoveable *)0)->trailAttenuateSpeed ) },
+	{ "idPhysics_RigidBody", "physicsObj", (intptr_t)(&((rvClientMoveable *)0)->physicsObj), sizeof( ((rvClientMoveable *)0)->physicsObj ) },
+	{ "int", "bounceSoundTime", (intptr_t)(&((rvClientMoveable *)0)->bounceSoundTime), sizeof( ((rvClientMoveable *)0)->bounceSoundTime ) },
+	{ "const idSoundShader *", "bounceSoundShader", (intptr_t)(&((rvClientMoveable *)0)->bounceSoundShader), sizeof( ((rvClientMoveable *)0)->bounceSoundShader ) },
+	{ "bool", "mPlayBounceSoundOnce", (intptr_t)(&((rvClientMoveable *)0)->mPlayBounceSoundOnce), sizeof( ((rvClientMoveable *)0)->mPlayBounceSoundOnce ) },
+	{ "bool", "mHasBounced", (intptr_t)(&((rvClientMoveable *)0)->mHasBounced), sizeof( ((rvClientMoveable *)0)->mHasBounced ) },
+	{ "idInterpolate < float >", "scale", (intptr_t)(&((rvClientMoveable *)0)->scale), sizeof( ((rvClientMoveable *)0)->scale ) },
+	{ NULL, 0 }
+};
+
+static classVariableInfo_t rvClientAFEntity_typeInfo[] = {
+	{ ": idAF", "af", (intptr_t)(&((rvClientAFEntity *)0)->af), sizeof( ((rvClientAFEntity *)0)->af ) },
+	{ "idClipModel *", "combatModel", (intptr_t)(&((rvClientAFEntity *)0)->combatModel), sizeof( ((rvClientAFEntity *)0)->combatModel ) },
+	{ "int", "combatModelContents", (intptr_t)(&((rvClientAFEntity *)0)->combatModelContents), sizeof( ((rvClientAFEntity *)0)->combatModelContents ) },
+	{ "idVec3", "spawnOrigin", (intptr_t)(&((rvClientAFEntity *)0)->spawnOrigin), sizeof( ((rvClientAFEntity *)0)->spawnOrigin ) },
+	{ "idMat3", "spawnAxis", (intptr_t)(&((rvClientAFEntity *)0)->spawnAxis), sizeof( ((rvClientAFEntity *)0)->spawnAxis ) },
+	{ "int", "nextSoundTime", (intptr_t)(&((rvClientAFEntity *)0)->nextSoundTime), sizeof( ((rvClientAFEntity *)0)->nextSoundTime ) },
+	{ NULL, 0 }
+};
+
+static classVariableInfo_t rvClientAFAttachment_typeInfo[] = {
+	{ ": idAnimatedEntity *", "body", (intptr_t)(&((rvClientAFAttachment *)0)->body), sizeof( ((rvClientAFAttachment *)0)->body ) },
+	{ "idClipModel *", "combatModel", (intptr_t)(&((rvClientAFAttachment *)0)->combatModel), sizeof( ((rvClientAFAttachment *)0)->combatModel ) },
+	{ "int", "idleAnim", (intptr_t)(&((rvClientAFAttachment *)0)->idleAnim), sizeof( ((rvClientAFAttachment *)0)->idleAnim ) },
+	{ "jointHandle_t", "damageJoint", (intptr_t)(&((rvClientAFAttachment *)0)->damageJoint), sizeof( ((rvClientAFAttachment *)0)->damageJoint ) },
+	{ "idList < copyJoints_t >", "copyJoints", (intptr_t)(&((rvClientAFAttachment *)0)->copyJoints), sizeof( ((rvClientAFAttachment *)0)->copyJoints ) },
 	{ NULL, 0 }
 };
 
@@ -5060,6 +5162,14 @@ static classTypeInfo_t classTypeInfo[] = {
 	{ "DnCivilian", "DnAI", sizeof(DnCivilian), DnCivilian_typeInfo },
 	{ "DukePlayer", "idPlayer", sizeof(DukePlayer), DukePlayer_typeInfo },
 	{ "dnDecoration", "idMover", sizeof(dnDecoration), dnDecoration_typeInfo },
+	{ "rvClientEntity", "idClass", sizeof(rvClientEntity), rvClientEntity_typeInfo },
+//	{ "rvClientEntityPtr< class type >", "", sizeof(rvClientEntityPtr< class type >), rvClientEntityPtr_class_type__typeInfo },
+	{ "rvClientPhysics", "idEntity", sizeof(rvClientPhysics), rvClientPhysics_typeInfo },
+	{ "rvClientModel", "rvClientEntity", sizeof(rvClientModel), rvClientModel_typeInfo },
+	{ "rvAnimatedClientEntity", "rvClientModel", sizeof(rvAnimatedClientEntity), rvAnimatedClientEntity_typeInfo },
+	{ "rvClientMoveable", "rvClientEntity", sizeof(rvClientMoveable), rvClientMoveable_typeInfo },
+	{ "rvClientAFEntity", "rvAnimatedClientEntity", sizeof(rvClientAFEntity), rvClientAFEntity_typeInfo },
+	{ "rvClientAFAttachment", "rvClientAFEntity", sizeof(rvClientAFAttachment), rvClientAFAttachment_typeInfo },
 	{ "opcode_t", "", sizeof(opcode_t), opcode_t_typeInfo },
 	{ "idCompiler", "", sizeof(idCompiler), idCompiler_typeInfo },
 	{ "prstack_t", "", sizeof(prstack_t), prstack_t_typeInfo },
