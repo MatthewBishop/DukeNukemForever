@@ -28,6 +28,10 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "ConsoleHistory.h"
 
+#define CONSOLE_FONT_SCALE				0.24f
+#undef SMALLCHAR_WIDTH
+#define SMALLCHAR_WIDTH 7
+
 void SCR_DrawTextLeftAlign(float& y, const char* text, ...) id_attribute((format(printf, 2, 3)));
 void SCR_DrawTextRightAlign(float& y, const char* text, ...) id_attribute((format(printf, 2, 3)));
 
@@ -60,7 +64,7 @@ public:
 
 	//============================
 
-	const idMaterial* charSetShader;
+	//const idMaterial* charSetShader;
 
 private:
 	void				KeyDownEvent(int key);
@@ -138,13 +142,7 @@ SCR_DrawTextLeftAlign
 ==================
 */
 void SCR_DrawTextLeftAlign(float& y, const char* text, ...) {
-	char string[MAX_STRING_CHARS];
-	va_list argptr;
-	va_start(argptr, text);
-	idStr::vsnPrintf(string, sizeof(string), text, argptr);
-	va_end(argptr);
-	renderSystem->DrawSmallStringExt(0, y + 2, string, colorWhite, true, localConsole.charSetShader);
-	y += SMALLCHAR_HEIGHT + 4;
+
 }
 
 /*
@@ -153,13 +151,7 @@ SCR_DrawTextRightAlign
 ==================
 */
 void SCR_DrawTextRightAlign(float& y, const char* text, ...) {
-	char string[MAX_STRING_CHARS];
-	va_list argptr;
-	va_start(argptr, text);
-	int i = idStr::vsnPrintf(string, sizeof(string), text, argptr);
-	va_end(argptr);
-	renderSystem->DrawSmallStringExt(635 - i * SMALLCHAR_WIDTH, y + 2, string, colorWhite, true, localConsole.charSetShader);
-	y += SMALLCHAR_HEIGHT + 4;
+	
 }
 
 
@@ -285,7 +277,6 @@ the renderSystem is initialized
 ==============
 */
 void idConsoleLocal::LoadGraphics() {
-	charSetShader = declManager->FindMaterial("textures/bigchars");
 	whiteShader = declManager->FindMaterial("_white");
 	consoleShader = declManager->FindMaterial("_white");
 }
@@ -859,9 +850,9 @@ void idConsoleLocal::DrawInput() {
 
 	deviceContext->SetColor(idStr::ColorForIndex(C_COLOR_WHITE));
 
-	renderSystem->DrawSmallChar(1 * SMALLCHAR_WIDTH, y, ']', localConsole.charSetShader);
+	//renderSystem->DrawSmallChar(1 * SMALLCHAR_WIDTH, y, ']', localConsole.charSetShader);
 
-	consoleField.Draw(2 * SMALLCHAR_WIDTH, y, SCREEN_WIDTH - 3 * SMALLCHAR_WIDTH, true, charSetShader);
+	consoleField.Draw(0, y, SCREEN_WIDTH - 3 * SMALLCHAR_WIDTH, true, nullptr);
 }
 
 
@@ -883,9 +874,6 @@ void idConsoleLocal::DrawNotify() {
 		return;
 	}
 
-	currentColor = idStr::ColorIndex(C_COLOR_WHITE);
-	deviceContext->SetColor(idStr::ColorForIndex(currentColor));
-
 	v = 0;
 	for (i = current - NUM_CON_TIMES + 1; i <= current; i++) {
 		if (i < 0) {
@@ -901,16 +889,23 @@ void idConsoleLocal::DrawNotify() {
 		}
 		text_p = text + (i % TOTAL_LINES) * LINE_WIDTH;
 
+
+		char temp[512];
+		char* textPtr = &temp[0];
+		bool firstColor = true;
 		for (x = 0; x < LINE_WIDTH; x++) {
-			if ((text_p[x] & 0xff) == ' ') {
-				continue;
+			*textPtr++ = text_p[x] & 0xff;
+
+			if (firstColor) {
+				currentColor = idStr::ColorIndex(text_p[x] >> 8);				
+				firstColor = false;
 			}
-			if (idStr::ColorIndex(text_p[x] >> 8) != currentColor) {
-				currentColor = idStr::ColorIndex(text_p[x] >> 8);
-				deviceContext->SetColor(idStr::ColorForIndex(currentColor));
-			}
-			renderSystem->DrawSmallChar((x + 1) * SMALLCHAR_WIDTH, v, text_p[x] & 0xff, localConsole.charSetShader);
 		}
+		textPtr[0] = 0;
+		deviceContext->SetColor(idStr::ColorForIndex(currentColor));
+		deviceContext->DrawTextA(0, v + SMALLCHAR_HEIGHT, CONSOLE_FONT_SCALE, idStr::ColorForIndex(currentColor), temp, CONSOLE_FONT_SCALE, 0, true);
+		currentColor = idStr::ColorIndex(C_COLOR_WHITE);
+		deviceContext->SetColor(idStr::ColorForIndex(currentColor));
 
 		v += SMALLCHAR_HEIGHT;
 	}
@@ -958,24 +953,22 @@ void idConsoleLocal::DrawSolidConsole(float frac) {
 
 	renderSystem->DrawStretchPic(0, y, SCREEN_WIDTH, 2, 0, 0, 0, 0, whiteShader);
 
+	deviceContext->SetColor(colorRed);
+
 	// draw the version number
 	idStr version = va("%s.%i", ENGINE_VERSION, BUILD_NUMBER);
 	i = version.Length();
 
-	for (x = 0; x < i; x++) {
-		renderSystem->DrawSmallChar(SCREEN_WIDTH - (i - x) * SMALLCHAR_WIDTH,
-			(lines - (SMALLCHAR_HEIGHT + SMALLCHAR_HEIGHT / 2)) - SMALLCHAR_HEIGHT, version[x], localConsole.charSetShader);
+	deviceContext->DrawTextA(SCREEN_WIDTH - (i) * SMALLCHAR_WIDTH, (lines - (SMALLCHAR_HEIGHT + SMALLCHAR_HEIGHT / 2)), CONSOLE_FONT_SCALE, colorGold,
+		version, 1.0, 0, true);
 
-	}
 
 	idStr buildTime = BUILD_TIME;
 	i = buildTime.Length();
 
-	for (x = 0; x < i; x++) {
-		renderSystem->DrawSmallChar(SCREEN_WIDTH - (i - x) * SMALLCHAR_WIDTH,
-			(lines - (SMALLCHAR_HEIGHT + SMALLCHAR_HEIGHT / 2)), buildTime[x], localConsole.charSetShader);
 
-	}
+	deviceContext->DrawTextA(SCREEN_WIDTH - (i) * SMALLCHAR_WIDTH, (lines - (SMALLCHAR_HEIGHT + SMALLCHAR_HEIGHT / 2)) + SMALLCHAR_HEIGHT, CONSOLE_FONT_SCALE, colorGold,
+		buildTime, 1.0, 0, true);
 
 	deviceContext->SetColor(colorWhite);
 
@@ -992,20 +985,13 @@ void idConsoleLocal::DrawSolidConsole(float frac) {
 		// draw arrows to show the buffer is backscrolled
 		deviceContext->SetColor(idStr::ColorForIndex(C_COLOR_WHITE));
 		for (x = 0; x < LINE_WIDTH; x += 4) {
-			renderSystem->DrawSmallChar((x + 1) * SMALLCHAR_WIDTH, idMath::FtoiFast(y), '^', localConsole.charSetShader);
+			renderSystem->DrawSmallChar((x + 1) * SMALLCHAR_WIDTH, idMath::FtoiFast(y), '^', nullptr);
 		}
 		y -= SMALLCHAR_HEIGHT;
 		rows--;
 	}
 
 	row = display;
-
-	if (x == 0) {
-		row--;
-	}
-
-	currentColor = idStr::ColorIndex(C_COLOR_WHITE);
-	deviceContext->SetColor(idStr::ColorForIndex(currentColor));
 
 	for (i = 0; i < rows; i++, y -= SMALLCHAR_HEIGHT, row--) {
 		if (row < 0) {
@@ -1018,17 +1004,25 @@ void idConsoleLocal::DrawSolidConsole(float frac) {
 
 		text_p = text + (row % TOTAL_LINES) * LINE_WIDTH;
 
+		char temp[512];
+		char* textPtr = &temp[0];
+		bool firstColor = true;
 		for (x = 0; x < LINE_WIDTH; x++) {
-			if ((text_p[x] & 0xff) == ' ') {
-				continue;
+
+			if (firstColor) {
+				currentColor = idStr::ColorIndex(text_p[x] >> 8);
+				firstColor = false;
 			}
 
-			if (idStr::ColorIndex(text_p[x] >> 8) != currentColor) {
-				currentColor = idStr::ColorIndex(text_p[x] >> 8);
-				deviceContext->SetColor(idStr::ColorForIndex(currentColor));
-			}
-			renderSystem->DrawSmallChar((x + 1) * SMALLCHAR_WIDTH, idMath::FtoiFast(y), text_p[x] & 0xff, localConsole.charSetShader);
+			*textPtr++ = text_p[x] & 0xff;
+			//renderSystem->DrawSmallChar((x + 1) * SMALLCHAR_WIDTH, idMath::FtoiFast(y), text_p[x] & 0xff, localConsole.charSetShader);
 		}
+
+		textPtr[0] = 0;
+		deviceContext->SetColor(idStr::ColorForIndex(currentColor));
+		deviceContext->DrawTextA(0, idMath::FtoiFast(y) + SMALLCHAR_HEIGHT, CONSOLE_FONT_SCALE, idStr::ColorForIndex(currentColor), temp, CONSOLE_FONT_SCALE, 0, true);
+		currentColor = idStr::ColorIndex(C_COLOR_WHITE);
+		deviceContext->SetColor(idStr::ColorForIndex(currentColor));
 	}
 
 	// draw the input prompt, user text, and cursor if desired
@@ -1047,10 +1041,6 @@ ForceFullScreen is used by the editor
 */
 void	idConsoleLocal::Draw(bool forceFullScreen) {
 	float y = 0.0f;
-
-	if (!charSetShader) {
-		return;
-	}
 
 	if (forceFullScreen) {
 		// if we are forced full screen because of a disconnect, 
@@ -1080,7 +1070,52 @@ void	idConsoleLocal::Draw(bool forceFullScreen) {
 
 	if (com_showFPS.GetInteger() > 0) {
 #ifdef ID_ALLOW_TOOLS
-		renderSystem->RenderToolGui(&displayFrameRateTool);
+		#define FPS_FRAMES 4
+
+		char* s;
+		int			w;
+		static int	previousTimes[FPS_FRAMES];
+		static int	index;
+		int		i, total;
+		int		fps = 0;
+		static	int	previous;
+		int		t, frameTime;
+		//rvmPerformanceMetrics_t* metrics;
+
+		// don't use serverTime, because that will be drifting to
+		// correct for internet lag changes, timescales, timedemos, etc
+		t = Sys_Milliseconds();
+		frameTime = t - previous;
+		previous = t;
+
+		previousTimes[index % FPS_FRAMES] = frameTime;
+		index++;
+		if (index > FPS_FRAMES) {
+			// average multiple frames together to smooth changes out a bit
+			total = 0;
+			for (i = 0; i < FPS_FRAMES; i++) {
+				total += previousTimes[i];
+			}
+			if (!total) {
+				total = 1;
+			}
+			fps = 10000 * FPS_FRAMES / total;
+			fps = (fps + 5) / 10;
+		}
+
+		if (fps > 100)
+			fps = 99;
+
+		idStr txt = va("Frame: %d FPS", fps);
+		deviceContext->DrawTextA(SCREEN_WIDTH - (txt.Length() * SMALLCHAR_WIDTH) - SMALLCHAR_WIDTH, y + SMALLCHAR_HEIGHT, CONSOLE_FONT_SCALE, colorWhite, txt, CONSOLE_FONT_SCALE, 0, true);
+		y += SMALLCHAR_HEIGHT;
+#ifdef _DEBUG
+		txt = "Debug Build";
+#else
+		txt = "Release Build";
+#endif
+		deviceContext->DrawTextA(SCREEN_WIDTH - (txt.Length() * SMALLCHAR_WIDTH) - SMALLCHAR_WIDTH, y + SMALLCHAR_HEIGHT, CONSOLE_FONT_SCALE, colorWhite, txt, CONSOLE_FONT_SCALE, 0, true);
+		//renderSystem->RenderToolGui(&displayFrameRateTool);
 #endif
 	}
 
