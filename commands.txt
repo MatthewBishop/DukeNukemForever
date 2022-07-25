@@ -1,0 +1,8 @@
++set fs_cdpath D:\Projects\DukeNukemForever +set fs_copyfiles 1
+
+this is how i build the package it just copies over the files it needs
+'
+
+
+
+https://github.com/MadDeCoDeR/Classic-RBDOOM-3-BFG/commit/8f6dcc9daabbffcc53074d16a2bd0857f23aad4a
