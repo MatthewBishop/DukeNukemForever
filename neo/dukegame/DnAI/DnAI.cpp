@@ -1,7 +1,7 @@
 // DnAI.cpp
 //
 
-#include "../../game/Game_local.h"
+#include "../gamelib/game_local.h"
 
 CLASS_DECLARATION(idActor, DnAI)
 END_CLASS
@@ -17,6 +17,7 @@ DnAI::Spawn
 */
 void DnAI::Spawn(void)
 {
+	AI_PAIN = false;
 	target = nullptr;
 	isTargetVisible = false;
 	ideal_yaw = 0;
@@ -66,6 +67,9 @@ void DnAI::SetupPhysics(void)
 	idBounds bounds;
 	bounds[0] = spawnArgs.GetVector("editor_mins");
 	bounds[1] = spawnArgs.GetVector("editor_maxs");
+
+	bounds[0].z += 10.0f;
+	bounds[1].z += 20.0f;
 
 	physicsObj.SetSelf(this);
 	idClipModel* newClip = new idClipModel(idTraceModel(bounds));
@@ -381,6 +385,12 @@ bool DnAI::MoveToPosition(const idVec3& pos)
 
 bool DnAI::Pain(idEntity* inflictor, idEntity* attacker, int damage, const idVec3& dir, int location)
 {
+	if (idMath::FRandRange(1.0f, 10.0f) < 5.0f)
+	{
+		Event_StopMove();
+		Event_SetState("state_ShootEnemy");
+		AI_PAIN = true;
+	}
 	return true;
 }
 
@@ -442,6 +452,8 @@ void DnAI::Think(void)
 	}
 
 	stateThread.Execute();
+
+	AI_PAIN = false;
 
 	if (health > 0)
 	{

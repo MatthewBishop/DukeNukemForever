@@ -2,7 +2,7 @@
 //
 
 
-#include "../../game/Game_local.h"
+#include "../gamelib/game_local.h"
 
 #define PIGCOP_FIRE_DISTANCE			500
 #define PIGCOP_FORCE_FIREDISTANCE		200
@@ -91,7 +91,7 @@ stateResult_t DnPigcop::state_ShootEnemy(stateParms_t* parms)
 	float distToEnemy = 0.0f;
 	distToEnemy = (target->GetOrigin() - GetOrigin()).Length();
 
-	if (distToEnemy < PIGCOP_FIRE_DISTANCE + 25)
+	if (distToEnemy < PIGCOP_FIRE_DISTANCE + 25 || AI_PAIN)
 	{
 		if (!isTargetVisible)
 		{
@@ -108,7 +108,7 @@ stateResult_t DnPigcop::state_ShootEnemy(stateParms_t* parms)
 		idVec3 muzzleDir = muzzleOrigin - (target->GetOrigin() + target->GetVisualOffset());
 
 		muzzleDir.Normalize();
-		Event_Hitscan(muzzleOrigin, -muzzleDir, 1, 1, 20);
+		Event_Hitscan("damage_pigcop", muzzleOrigin, -muzzleDir, 1, 1, 20);
 
 		return SRESULT_WAIT;
 	}
