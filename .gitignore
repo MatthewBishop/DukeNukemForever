@@ -1,4 +1,3 @@
-base/*
 neo/.vs/*
 neo/out/*
 *.json
@@ -6,3 +5,8 @@ neo/out/*
 *.dll
 *.pdb
 *.exe
+base/dukekey
+base/xpkey
+base/duketool.cfg
+base/DNFConfig.cfg
+base/consoleHistory.txt
