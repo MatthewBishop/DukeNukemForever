@@ -1204,6 +1204,14 @@ void DnAI::Restore(idRestoreGame* savefile) {
 	__super::Restore(savefile);
 }
 
+void DnRobot::Save(idSaveGame* savefile) const {
+	__super::Save(savefile);
+}
+
+void DnRobot::Restore(idRestoreGame* savefile) {
+	__super::Restore(savefile);
+}
+
 void DnPigcop::Save(idSaveGame* savefile) const {
 	__super::Save(savefile);
 }

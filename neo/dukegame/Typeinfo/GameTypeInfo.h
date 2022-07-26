@@ -7,11 +7,11 @@
 
 	This file has been generated with the Type Info Generator v1.1 (c) 2004 id Software
 
-	593 constants
-	58 enums
-	314 classes/structs/unions
+	595 constants
+	59 enums
+	315 classes/structs/unions
 	4 templates
-	7 max inheritance level for 'DnPigcop'
+	7 max inheritance level for 'DnRobot'
 
 ===================================================================================
 */
@@ -508,6 +508,8 @@ static constantInfo_t constantInfo[] = {
 	{ "int", "MOVE_STATUS_BLOCKED_BY_OBJECT", "6" },
 	{ "int", "MOVE_STATUS_BLOCKED_BY_ENEMY", "7" },
 	{ "int", "MOVE_STATUS_BLOCKED_BY_MONSTER", "8" },
+	{ "int", "ROBOT_IDLE_WAITINGTPLAYER", "0" },
+	{ "int", "ROBOT_IDLE_ROAR", "1" },
 	{ "int", "PIGCOP_IDLE_WAITINGTPLAYER", "0" },
 	{ "int", "PIGCOP_IDLE_ROAR", "1" },
 	{ "int", "LIZTROOP_IDLE_WAITINGTPLAYER", "0" },
@@ -1255,6 +1257,12 @@ static enumValueInfo_t moveStatus_t_typeInfo[] = {
 	{ NULL, 0 }
 };
 
+static enumValueInfo_t ROBOT_IDLE_STATE_typeInfo[] = {
+	{ "ROBOT_IDLE_WAITINGTPLAYER", 0 },
+	{ "ROBOT_IDLE_ROAR", 1 },
+	{ NULL, 0 }
+};
+
 static enumValueInfo_t PIGCOP_IDLE_STATE_typeInfo[] = {
 	{ "PIGCOP_IDLE_WAITINGTPLAYER", 0 },
 	{ "PIGCOP_IDLE_ROAR", 1 },
@@ -1274,7 +1282,7 @@ static enumValueInfo_t dnWeapons_typeInfo[] = {
 	{ NULL, 0 }
 };
 
-static enumValueInfo_t enum_57_typeInfo[] = {
+static enumValueInfo_t enum_58_typeInfo[] = {
 	{ "OP_RETURN", 0 },
 	{ "OP_UINC_F", 1 },
 	{ "OP_UINCP_F", 2 },
@@ -1457,10 +1465,11 @@ static enumTypeInfo_t enumTypeInfo[] = {
 	{ "moveCommand_t", moveCommand_t_typeInfo },
 	{ "talkState_t", talkState_t_typeInfo },
 	{ "moveStatus_t", moveStatus_t_typeInfo },
+	{ "ROBOT_IDLE_STATE", ROBOT_IDLE_STATE_typeInfo },
 	{ "PIGCOP_IDLE_STATE", PIGCOP_IDLE_STATE_typeInfo },
 	{ "LIZTROOP_IDLE_STATE", LIZTROOP_IDLE_STATE_typeInfo },
 	{ "dnWeapons", dnWeapons_typeInfo },
-	{ "enum_57", enum_57_typeInfo },
+	{ "enum_58", enum_58_typeInfo },
 	{ NULL, NULL }
 };
 
@@ -4677,6 +4686,13 @@ static classVariableInfo_t DnAI_typeInfo[] = {
 	{ NULL, 0 }
 };
 
+static classVariableInfo_t DnRobot_typeInfo[] = {
+	{ ": const idSoundShader *", "troop_awake", (intptr_t)(&((DnRobot *)0)->troop_awake), sizeof( ((DnRobot *)0)->troop_awake ) },
+	{ "const idSoundShader *", "fire_sound", (intptr_t)(&((DnRobot *)0)->fire_sound), sizeof( ((DnRobot *)0)->fire_sound ) },
+	{ "const idSoundShader *", "death_sound", (intptr_t)(&((DnRobot *)0)->death_sound), sizeof( ((DnRobot *)0)->death_sound ) },
+	{ NULL, 0 }
+};
+
 static classVariableInfo_t DnPigcop_typeInfo[] = {
 	{ ": const idSoundShader *", "pig_roam1", (intptr_t)(&((DnPigcop *)0)->pig_roam1), sizeof( ((DnPigcop *)0)->pig_roam1 ) },
 	{ "const idSoundShader *", "pig_roam2", (intptr_t)(&((DnPigcop *)0)->pig_roam2), sizeof( ((DnPigcop *)0)->pig_roam2 ) },
@@ -5161,6 +5177,7 @@ static classTypeInfo_t classTypeInfo[] = {
 	{ "idMoveState", "", sizeof(idMoveState), idMoveState_typeInfo },
 	{ "DnRand", "", sizeof(DnRand), DnRand_typeInfo },
 	{ "DnAI", "idActor", sizeof(DnAI), DnAI_typeInfo },
+	{ "DnRobot", "DnAI", sizeof(DnRobot), DnRobot_typeInfo },
 	{ "DnPigcop", "DnAI", sizeof(DnPigcop), DnPigcop_typeInfo },
 	{ "DnLiztroop", "DnAI", sizeof(DnLiztroop), DnLiztroop_typeInfo },
 	{ "DnCivilian", "DnAI", sizeof(DnCivilian), DnCivilian_typeInfo },

@@ -219,6 +219,7 @@ protected:
 	bool					startedDeath;
 };
 
+#include "../Monsters/Monster_Robot.h"
 #include "../Monsters/Monster_Pigcop.h"
 #include "../Monsters/Monster_Liztroop.h"
 #include "../Civilians/Civilian.h"
