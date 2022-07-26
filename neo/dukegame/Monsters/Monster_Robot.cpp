@@ -21,9 +21,9 @@ stateResult_t DnRobot::state_Begin(stateParms_t* parms)
 
 	Event_SetState("state_Idle");
 
-	troop_awake = declManager->FindSound("Robot_awake", false);
-	fire_sound = declManager->FindSound("Robot_fire", false);
-	death_sound = declManager->FindSound("Robot_die", false);
+	troop_awake = declManager->FindSound("robot_awake", false);
+	fire_sound = declManager->FindSound("robot_fire", false);
+	death_sound = declManager->FindSound("robot_die", false);
 
 	return SRESULT_DONE;
 }
