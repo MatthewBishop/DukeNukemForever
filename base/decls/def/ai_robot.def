@@ -15,7 +15,7 @@ model robot
 	anim death			models/characters/animations/Liztroop/death.md5anim
 }
 
-entityDef monster_liztroop
+entityDef monster_robot
 {
 	"spawnclass"					"DnRobot"
 	"model"							"robot"
