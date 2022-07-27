@@ -19,6 +19,7 @@ public:
 	stateResult_t				state_Begin(stateParms_t* parms);
 	stateResult_t				state_Idle(stateParms_t* parms);
 	stateResult_t				state_ApproachingEnemy(stateParms_t* parms);
+	stateResult_t				state_MeleeEnemy(stateParms_t* parms);
 	stateResult_t				state_ShootEnemy(stateParms_t* parms);
 	stateResult_t				state_BeginDeath(stateParms_t* parms);
 	stateResult_t				state_Killed(stateParms_t* parms);

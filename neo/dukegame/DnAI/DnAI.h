@@ -167,6 +167,8 @@ public:
 	bool					CurrentlyPlayingSound();
 
 	bool					FacingIdeal();
+	bool					TestMelee(idActor* enemyEnt);
+
 	bool					Event_TurnToward(float yaw);
 	bool					Event_TurnToward(const idVec3& pos);
 
@@ -176,6 +178,7 @@ public:
 	idEntity*				GetEnemy() { return target; }
 protected:
 	void					Event_SetAnimation(const char* anim, bool loop);
+	void					AttackMelee(const char* damage_type, const char* meleeDefName, idActor* enemyEnt);
 	void					Event_Hitscan(const char *damage_type, const idVec3& muzzleOrigin, const idVec3& dir, int num_hitscans, float spread, float power);
 	void					Event_UpdatePathToPosition(idVec3 position);
 	idPlayer*				Event_FindNewTarget();
@@ -191,7 +194,7 @@ protected:
 	bool					isTargetVisible;
 
 	idPhysics_Monster		physicsObj;
-
+	float					melee_range;
 	float					ideal_yaw;
 	float					current_yaw;
 	float					turnRate;

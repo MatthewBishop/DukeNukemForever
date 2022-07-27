@@ -61,10 +61,71 @@ stateResult_t DnRobot::state_Killed(stateParms_t* parms)
 DnRobot::state_ShootEnemy
 ==============
 */
+stateResult_t DnRobot::state_MeleeEnemy(stateParms_t* parms)
+{
+	// If we are firing, don't make any new decisions until its done.
+	if ((animator.IsAnimating(gameLocal.time) || CurrentlyPlayingSound()) && (GetCurrentAnimation() == "fire" || GetCurrentAnimation() == "melee"))
+	{
+		Event_TurnToward(target->GetOrigin());
+		animator.RemoveOriginOffset(true);
+		return SRESULT_WAIT;
+	}
+
+	if (target == NULL || !TestMelee(target)) {
+		//play miss sound
+
+		return SRESULT_WAIT;
+	}
+	//play hit sound
+
+	idVec3	kickDir;//TODO init this
+
+	idVec3	globalKickDir;
+	globalKickDir = (viewAxis * physicsObj.GetGravityAxis()) * kickDir;
+
+	target->Damage(this, this, globalKickDir, "damage_liztoop", 1.0f, INVALID_JOINT);
+
+	float canMelee = TestMelee(target);
+
+	if (canMelee || AI_PAIN)
+	{
+		if (!isTargetVisible)
+		{
+			Event_SetState("state_ApproachingEnemy");
+			return SRESULT_DONE;
+		}
+
+		Event_TurnToward(target->GetOrigin());
+		Event_ResetAnimation();
+		Event_SetAnimation("fire", false);
+		StartSoundShader(fire_sound, SND_CHANNEL_ANY, 0, false, nullptr);
+
+		idVec3 muzzleOrigin = GetOrigin() + idVec3(0, 0, 40);
+		idVec3 muzzleDir = muzzleOrigin - (target->GetOrigin() + target->GetVisualOffset());
+
+		muzzleDir.Normalize();
+		Event_Hitscan("damage_liztoop", muzzleOrigin, -muzzleDir, 1, 1, 10);
+
+		return SRESULT_WAIT;
+	}
+	else
+	{
+		Event_SetState("state_ApproachingEnemy");
+		return SRESULT_DONE;
+	}
+
+	return SRESULT_WAIT;
+}
+
+/*
+==============
+DnRobot::state_ShootEnemy
+==============
+*/
 stateResult_t DnRobot::state_ShootEnemy(stateParms_t* parms)
 {
 	// If we are firing, don't make any new decisions until its done.
-	if ((animator.IsAnimating(gameLocal.time) || CurrentlyPlayingSound()) && GetCurrentAnimation() == "fire")
+	if ((animator.IsAnimating(gameLocal.time) || CurrentlyPlayingSound()) && (GetCurrentAnimation() == "fire" || GetCurrentAnimation() == "melee"))
 	{
 		Event_TurnToward(target->GetOrigin());
 		animator.RemoveOriginOffset(true);
@@ -114,13 +175,18 @@ stateResult_t DnRobot::state_ApproachingEnemy(stateParms_t* parms)
 	float distToEnemy = 0.0f;
 
 	distToEnemy = (target->GetOrigin() - GetOrigin()).Length();
-
-	if (distToEnemy > ROBOT_FIRE_DISTANCE || !isTargetVisible || (CurrentlyPlayingSound() && distToEnemy >= ROBOT_FORCE_FIREDISTANCE))
+	float canMelee = TestMelee(target);
+	if ((distToEnemy > ROBOT_FIRE_DISTANCE && !canMelee) || !isTargetVisible || (CurrentlyPlayingSound() && distToEnemy >= ROBOT_FORCE_FIREDISTANCE))
 	{
 		Event_UpdatePathToPosition(target->GetOrigin());
 		Event_SetAnimation("walk", true);
 	}
-	else
+	else if (canMelee)
+	{
+		Event_StopMove();
+		Event_SetState("state_MeleeEnemy");
+		return SRESULT_DONE;
+	} else
 	{
 		Event_StopMove();
 		Event_SetState("state_ShootEnemy");

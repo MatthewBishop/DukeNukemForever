@@ -169,6 +169,59 @@ void DnAI::Turn()
 	viewAxis = idAngles(0, current_yaw, 0).ToMat3();
 }
 
+/*
+=====================
+idAI::TestMelee
+=====================
+*/
+bool DnAI::TestMelee(idActor* enemyEnt)
+{
+	trace_t trace;
+
+	if (!enemyEnt || !melee_range)
+	{
+		return false;
+	}
+
+	//FIXME: make work with gravity vector
+	idVec3 org = physicsObj.GetOrigin();
+	const idBounds& myBounds = physicsObj.GetBounds();
+	idBounds bounds;
+
+	// expand the bounds out by our melee range
+	bounds[0][0] = -melee_range;
+	bounds[0][1] = -melee_range;
+	bounds[0][2] = myBounds[0][2] - 4.0f;
+	bounds[1][0] = melee_range;
+	bounds[1][1] = melee_range;
+	bounds[1][2] = myBounds[1][2] + 4.0f;
+	bounds.TranslateSelf(org);
+
+	idVec3 enemyOrg = enemyEnt->GetPhysics()->GetOrigin();
+	idBounds enemyBounds = enemyEnt->GetPhysics()->GetBounds();
+	enemyBounds.TranslateSelf(enemyOrg);
+
+	if (ai_debugMove.GetBool())
+	{
+		gameRenderWorld->DebugBounds(colorYellow, bounds, vec3_zero, 1);
+	}
+
+	if (!bounds.IntersectsBounds(enemyBounds))
+	{
+		return false;
+	}
+
+	idVec3 start = GetEyePosition();
+	idVec3 end = enemyEnt->GetEyePosition();
+
+	gameLocal.clip.TracePoint(trace, start, end, MASK_SHOT_BOUNDINGBOX, this);
+	if ((trace.fraction == 1.0f) || (gameLocal.GetTraceEntity(trace) == enemyEnt))
+	{
+		return true;
+	}
+
+	return false;
+}
 
 /*
 =====================
